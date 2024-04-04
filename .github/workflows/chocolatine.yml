@@ -26,6 +26,7 @@ jobs:
           $(pwd) $(pwd)
 
   Checking_program_compilation:
+    needs: check_coding_style
     name: Checking Program Compilation
     runs-on: epitechcontent/epitest-docker
     timeout-minutes: 5
@@ -51,6 +52,7 @@ jobs:
           done
 
   run-tests:
+    needs: Checking_program_compilation
     name: Run Tests
     runs-on: epitechcontent/epitest-docker
     timeout-minutes: 5
@@ -63,6 +65,7 @@ jobs:
         timeout-minutes: 2
 
   push_to_mirror:
+    needs: run-tests
     name: Pushing to mirror repository
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
